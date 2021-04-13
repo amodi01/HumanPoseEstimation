@@ -1,6 +1,6 @@
 import cv2
 import mediapipe
-
+import  math
 
 class poseDetector():
 
@@ -31,6 +31,24 @@ class poseDetector():
                 if draw:
                     cv2.circle(img, (cx, cy), 4, (0, 0, 255), cv2.FILLED)
         return  landMarksList
+
+    def getAngle(self,img,p1,p2,p3,landMarkList,draw=True):
+        p1_x,p1_y=landMarkList[p1][1:]
+        p2_x, p2_y = landMarkList[p2][1:]
+        p3_x, p3_y = landMarkList[p3][1:]
+
+        angle=math.degrees(math.atan2(p3_y-p2_y,p3_x-p2_x) -math.atan2(p1_y-p2_y,p1_x-p2_x) )
+
+        if draw:
+            cv2.line(img,(p1_x,p1_y),(p2_x,p2_y),(255,255,255),3)
+            cv2.line(img, (p3_x, p3_y), (p2_x, p2_y), (255, 255,255), 3)
+            cv2.circle(img, (p1_x, p1_y), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (p1_x, p1_y), 35, (0, 0, 255), 2)
+            cv2.circle(img, (p2_x, p2_y), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (p2_x, p2_y), 35, (0, 0, 255), 2)
+            cv2.circle(img, (p3_x, p3_y), 10, (0, 0, 255), cv2.FILLED)
+            cv2.circle(img, (p3_x, p3_y), 35, (0, 0, 255), 2)
+            cv2.putText(img, str(int(angle)),(p2_x -100,p2_y+100),cv2.FONT_HERSHEY_PLAIN,4,(255,255,0),4 )
 
 
 def main():
