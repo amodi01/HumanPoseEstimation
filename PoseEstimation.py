@@ -1,8 +1,8 @@
 import cv2
-import HPEModule  as hp
+from GymTrainerComponents import HPEModule as hp
 
 vCap = cv2.VideoCapture("videos/v1.mp4")
-pDetector = hp.poseDetector()
+pDetector = hp.PoseDetector()
 while True:
     success, img = vCap.read()
     result, img = pDetector.getPose(img, True)
